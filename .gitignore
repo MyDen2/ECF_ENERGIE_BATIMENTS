@@ -22,6 +22,8 @@ venv/
 env/
 .env/
 
+logs/ 
+output/
 data_ecf/consommations_raw.csv
 data_ecf/batiments.csv
 data_ecf/meteo_raw.csv
