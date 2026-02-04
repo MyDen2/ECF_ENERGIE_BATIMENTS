@@ -1,23 +1,9 @@
-[2026-02-03 14:48:05] START input=/data_ecf/consommations_raw.csv buildings=/data_ecf/batiments.csv output=/output/consommations_clean
-[2026-02-03 14:48:05] PARAMS master=spark://spark-master:7077 driver_memory=4g shuffle=8 outlier_threshold=10000.0 mode=overwrite
-[2026-02-03 14:48:07] Spark version=3.5.3
-[2026-02-03 14:48:14] READ rows_in=6674466
-[2026-02-03 14:49:11] TIMESTAMP bad=1 remaining=6674465
-[2026-02-03 14:49:50] CONSO non_castable=33519 remaining=6640946
-[2026-02-03 14:50:27] FILTER negatives=33441 outliers=33135 remaining=6574370
-[2026-02-03 14:51:13] DEDUP removed=110930 remaining=6463440
-[2026-02-03 14:51:59] JOIN buildings null_commune_groups=0
-[2026-02-03 14:56:37] WRITE parquet rows_out=100000 path=/output/consommations_clean
-[2026-02-03 14:56:37] ==================== RAPPORT NETTOYAGE (C2.2) ====================
-[2026-02-03 14:56:37] Entrée (rows_in)                        : 6674466
-[2026-02-03 14:56:37] Sortie (rows_out)                       : 100000
-[2026-02-03 14:56:37] Supprimées (réel entrée-sortie)          : 6574466
-[2026-02-03 14:56:37] ---- Détails (par étape) ----
-[2026-02-03 14:56:37] Timestamps invalides (bad_ts)            : 1
-[2026-02-03 14:56:37] Consommations non castables (bad_conso)  : 33519
-[2026-02-03 14:56:37] Valeurs négatives                        : 33441
-[2026-02-03 14:56:37] Outliers > 10000.0      : 33135
-[2026-02-03 14:56:37] Doublons supprimés                       : 110930
-[2026-02-03 14:56:37] Parquet écrit dans                       : /output/consommations_clean
-[2026-02-03 14:56:37] ===================================================================
-[2026-02-03 14:56:37] END SUCCESS
+[2026-02-04 17:17:10] START input=/data_ecf/consommations_raw.csv buildings=/data_ecf/batiments.csv output=/output/consommations_clean
+[2026-02-04 17:17:10] PARAMS master=local[*] driver_memory=4g shuffle=8 outlier_threshold=10000.0 mode=overwrite
+[2026-02-04 17:17:11] Spark version=3.5.0
+[2026-02-04 17:17:16] READ rows_in=6674466
+[2026-02-04 17:17:48] TIMESTAMP bad=1 remaining=6674465
+[2026-02-04 17:18:06] CONSO non_castable=33519 remaining=6640946
+[2026-02-04 17:18:29] FILTER negatives=33441 outliers=33135 remaining=6574370
+[2026-02-04 17:19:12] DEDUP removed=110930 remaining=6463440
+[2026-02-04 17:19:53] JOIN buildings null_commune_groups=0

@@ -288,7 +288,6 @@ services:
     networks:
       - spark-network
 
-  # ✅ job CLI : ton livrable 02_nettoyage_spark.py
   spark-job:
     image: apache/spark:3.5.3
     container_name: spark-job
@@ -333,6 +332,64 @@ services:
       - spark-master
     networks:
       - spark-network
+
+  pipeline-spark:
+    image: apache/spark:3.5.3
+    container_name: ecf-pipeline-spark
+    depends_on:
+      - spark-master
+      - spark-worker-1
+      - spark-worker-2
+      - spark-worker-3
+    networks:
+      - spark-network
+    volumes:
+      - ./notebooks:/notebooks
+      - ./output:/output:rw
+      - ./logs:/logs:rw
+      - ./data_ecf:/data_ecf:ro
+      - ./run_pipeline_spark.sh:/run_pipeline_spark.sh:ro
+    entrypoint: ["/bin/bash", "/run_pipeline_spark.sh"]
+  
+  pipeline-notebooks:
+    image: jupyter/pyspark-notebook:latest
+    container_name: ecf-pipeline-notebooks
+    depends_on:
+      - spark-master
+      - spark-worker-1
+      - spark-worker-2
+      - spark-worker-3
+    networks:
+      - spark-network
+    volumes:
+      - ./notebooks:/notebooks
+      - ./output:/output:rw
+      - ./logs:/logs:rw
+      - ./data_ecf:/data_ecf:ro
+      - ./run_pipeline_notebooks.sh:/run_pipeline_notebooks.sh:ro
+    command: bash /run_pipeline_notebooks.sh
+  
+  pipeline:
+    image: jupyter/pyspark-notebook:latest
+    user: root
+    container_name: ecf-pipeline
+    volumes:
+      - ./notebooks:/notebooks
+      - ./data_ecf:/data_ecf:ro
+      - ./output:/output:rw
+      - ./logs:/logs:rw
+      - ./run_pipeline.sh:/run_pipeline.sh:ro
+      - ./run_spark.sh:/run_spark.sh:ro
+      - ./run_notebooks.sh:/run_notebooks.sh:ro
+    command: bash /run_pipeline.sh
+    depends_on:
+      - spark-master
+      - spark-worker-1
+      - spark-worker-2
+      - spark-worker-3
+    networks:
+      - spark-network
+
 
 networks:
   spark-network:
