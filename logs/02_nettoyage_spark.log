@@ -1,9 +1,46 @@
-[2026-02-04 17:17:10] START input=/data_ecf/consommations_raw.csv buildings=/data_ecf/batiments.csv output=/output/consommations_clean
-[2026-02-04 17:17:10] PARAMS master=local[*] driver_memory=4g shuffle=8 outlier_threshold=10000.0 mode=overwrite
-[2026-02-04 17:17:11] Spark version=3.5.0
-[2026-02-04 17:17:16] READ rows_in=6674466
-[2026-02-04 17:17:48] TIMESTAMP bad=1 remaining=6674465
-[2026-02-04 17:18:06] CONSO non_castable=33519 remaining=6640946
-[2026-02-04 17:18:29] FILTER negatives=33441 outliers=33135 remaining=6574370
-[2026-02-04 17:19:12] DEDUP removed=110930 remaining=6463440
-[2026-02-04 17:19:53] JOIN buildings null_commune_groups=0
+[2026-02-05 06:28:40] START input=/data_ecf/consommations_raw.csv buildings=/data_ecf/batiments.csv output=/output/consommations_clean
+[2026-02-05 06:28:40] PARAMS master=spark://spark-master:7077 driver_memory=4g shuffle=8 outlier_threshold=10000.0 mode=overwrite
+[2026-02-05 06:28:42] Spark version=3.5.3
+[2026-02-05 06:28:48] FILTER negatives=38910 outliers=38560 remaining=7642423
+[2026-02-05 06:29:52] DEDUP removed=149839 remaining=7492584
+[2026-02-05 06:30:56] JOIN buildings null_commune_groups=0
+[2026-02-05 06:44:58] WRITE parquet rows_out=100000 path=/output/consommations_clean
+[2026-02-05 06:44:58] ==================== RAPPORT NETTOYAGE (C2.2) ====================
+[2026-02-05 06:44:58] Entrée (rows_in)                        : 7758868
+[2026-02-05 06:44:59] Sortie (rows_out)                       : 100000
+[2026-02-05 06:44:59] Supprimées (réel entrée-sortie)          : 7658868
+[2026-02-05 06:44:59] ---- Détails (par étape) ----
+[2026-02-05 06:44:59] Timestamps invalides (bad_ts)            : 0
+[2026-02-05 06:44:59] Consommations non castables (bad_conso)  : 38975
+[2026-02-05 06:44:59] Valeurs négatives                        : 38910
+[2026-02-05 06:44:59] Outliers > 10000.0      : 38560
+[2026-02-05 06:44:59] Doublons supprimés                       : 149839
+[2026-02-05 06:44:59] Parquet écrit dans                       : /output/consommations_clean
+[2026-02-05 06:44:59] ===================================================================
+[2026-02-05 06:44:59] END SUCCESS
+[2026-02-05 06:45:09] READ rows_in=7758868
+[2026-02-05 06:46:18] TIMESTAMP bad=0 remaining=7758868
+[2026-02-05 06:47:00] CONSO non_castable=38975 remaining=7719893
+[2026-02-05 06:47:45] FILTER negatives=38910 outliers=38560 remaining=7642423
+[2026-02-05 06:48:48] DEDUP removed=149839 remaining=7492584
+[2026-02-05 06:49:52] JOIN buildings null_commune_groups=0
+[2026-02-05 06:52:26] READ rows_in=7758868
+[2026-02-05 06:53:33] TIMESTAMP bad=0 remaining=7758868
+[2026-02-05 06:54:13] CONSO non_castable=38975 remaining=7719893
+[2026-02-05 06:54:59] FILTER negatives=38910 outliers=38560 remaining=7642423
+[2026-02-05 06:56:03] DEDUP removed=149839 remaining=7492584
+[2026-02-05 06:57:07] JOIN buildings null_commune_groups=0
+[2026-02-05 07:11:23] WRITE parquet rows_out=100000 path=/output/consommations_clean
+[2026-02-05 07:11:23] ==================== RAPPORT NETTOYAGE (C2.2) ====================
+[2026-02-05 07:11:23] Entrée (rows_in)                        : 7758868
+[2026-02-05 07:11:23] Sortie (rows_out)                       : 100000
+[2026-02-05 07:11:23] Supprimées (réel entrée-sortie)          : 7658868
+[2026-02-05 07:11:23] ---- Détails (par étape) ----
+[2026-02-05 07:11:23] Timestamps invalides (bad_ts)            : 0
+[2026-02-05 07:11:23] Consommations non castables (bad_conso)  : 38975
+[2026-02-05 07:11:23] Valeurs négatives                        : 38910
+[2026-02-05 07:11:23] Outliers > 10000.0      : 38560
+[2026-02-05 07:11:23] Doublons supprimés                       : 149839
+[2026-02-05 07:11:23] Parquet écrit dans                       : /output/consommations_clean
+[2026-02-05 07:11:23] ===================================================================
+[2026-02-05 07:11:23] END SUCCESS

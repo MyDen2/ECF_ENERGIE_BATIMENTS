@@ -297,7 +297,7 @@ def create_spark_session(master: str, driver_memory: str, shuffle_partitions: in
     spark = (
         SparkSession.builder
         .appName("ECF - Nettoyage Consommations")
-        .master(master)
+        .master("spark://spark-master:7077")
         .config("spark.driver.memory", driver_memory)
         .config("spark.sql.shuffle.partitions", str(shuffle_partitions))
         .getOrCreate()

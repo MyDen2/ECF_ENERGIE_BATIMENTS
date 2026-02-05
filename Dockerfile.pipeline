@@ -1,0 +1,44 @@
+# FROM apache/spark:3.5.3
+
+# USER root
+
+# # Python + pip (selon image de base Debian/Ubuntu)
+# RUN apt-get update && apt-get install -y python3 python3-pip && rm -rf /var/lib/apt/lists/*
+# RUN pip3 install --no-cache-dir pyspark==3.5.3 jupyter nbconvert nbclient ipykernel
+
+# # Libs nécessaires pour notebooks
+# RUN pip3 install --no-cache-dir \
+#     jupyter nbconvert nbclient ipykernel \
+#     pandas numpy matplotlib seaborn pyarrow
+
+# # (optionnel) éviter problèmes de permissions sur volumes windows
+# RUN mkdir -p /output /logs && chmod -R 777 /output /logs
+
+# USER 185
+# WORKDIR /notebooks
+
+FROM apache/spark:3.5.3
+
+USER root
+
+# Python + pip
+RUN apt-get update && apt-get install -y python3 python3-pip && rm -rf /var/lib/apt/lists/*
+
+# Packages Python nécessaires (alignés avec Spark 3.5.3)
+RUN pip3 install --no-cache-dir \
+    pyspark==3.5.3 \
+    pandas numpy matplotlib seaborn pyarrow \
+    jupyter nbconvert nbclient ipykernel
+
+# Dossiers output/logs + permissions (volumes Windows)
+RUN mkdir -p /output /logs /tmp/.ipython /tmp/.jupyter /tmp/.jupyter_runtime \
+ && chmod -R 777 /output /logs /tmp/.ipython /tmp/.jupyter /tmp/.jupyter_runtime
+
+# Eviter warnings IPython/Jupyter
+ENV HOME=/tmp \
+    IPYTHONDIR=/tmp/.ipython \
+    JUPYTER_CONFIG_DIR=/tmp/.jupyter \
+    JUPYTER_RUNTIME_DIR=/tmp/.jupyter_runtime
+
+WORKDIR /notebooks
+

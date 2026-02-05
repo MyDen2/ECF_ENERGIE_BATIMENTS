@@ -352,7 +352,7 @@ services:
     entrypoint: ["/bin/bash", "/run_pipeline_spark.sh"]
   
   pipeline-notebooks:
-    image: jupyter/pyspark-notebook:latest
+    image: jupyter/pyspark-notebook:python-3.11
     container_name: ecf-pipeline-notebooks
     depends_on:
       - spark-master
@@ -370,17 +370,19 @@ services:
     command: bash /run_pipeline_notebooks.sh
   
   pipeline:
-    image: jupyter/pyspark-notebook:latest
-    user: root
+    build:
+      context: .
+      dockerfile: Dockerfile.pipeline
     container_name: ecf-pipeline
     volumes:
+      - ./scripts:/scripts
       - ./notebooks:/notebooks
-      - ./data_ecf:/data_ecf:ro
-      - ./output:/output:rw
-      - ./logs:/logs:rw
-      - ./run_pipeline.sh:/run_pipeline.sh:ro
-      - ./run_spark.sh:/run_spark.sh:ro
-      - ./run_notebooks.sh:/run_notebooks.sh:ro
+      - ./output:/output
+      - ./logs:/logs
+      - ./data_ecf:/data_ecf
+      - ./run_pipeline.sh:/run_pipeline.sh
+      - ./run_spark.sh:/run_spark.sh
+      - ./run_notebooks.sh:/run_notebooks.sh
     command: bash /run_pipeline.sh
     depends_on:
       - spark-master
@@ -389,7 +391,6 @@ services:
       - spark-worker-3
     networks:
       - spark-network
-
 
 networks:
   spark-network:
